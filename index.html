@@ -10,7 +10,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Mobile-Local</title>
+  <title></title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -23,7 +23,31 @@
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.js"><\/script>')</script>
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    var zipcode = '04106';
+    $(document).ready(function(){
+      $.ajax({
+        url: 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20location%3D' + zipcode + '&format=json&diagnostics=true&callback=',
+        dataType: 'json',
+        success: function(data){
+          setWeather(data);
+        }
+      });
+    })
+
+    function setWeather(data) {
+      var item = data['query']['results']['channel']['item'];
+      var condition = item['condition'];
+      var text = '<p>' + item['title'] + '<br />';
+      text += condition['date'] + '<br />';
+      text += condition['text'];
+      text += '<img src="' + item['description'].substring(11,48) + '" /> ';
+      text += condition['temp'] + ' F&deg;</p>';
+      $('#weather').html(text);
+    }
+  </script>
 </head>
 <body>
+<div id="weather"></div>
 </body>
 </html>
