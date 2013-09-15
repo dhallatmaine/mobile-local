@@ -32,8 +32,27 @@ function setWeather(data) {
 }
 
 function updateLocation() {
-  zipcode = document.getElementById("location").value;
-  updatePage();
+  getZipAndCordsFromInput(document.getElementById("location").value);
+}
+
+var cords = null;
+
+function getZipAndCordsFromInput(userInput) {
+  $.ajax({
+    url: 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.placefinder%20where%20text%3D%22' + userInput + '%22&format=json&diagnostics=true&callback=',
+    dataType: 'json',
+    success: function (data) {
+      cords = data;
+      setZipAndCords(data);
+    }
+  });
+}
+
+function setZipAndCords(data) {
+  var pos = {};
+  pos.lat = data['query']['results']['Result']['latitude'];
+  pos.lon = data['query']['results']['Result']['longitude'];
+  locationSucc(pos);
 }
 
 function useDefaultLocation() {
@@ -51,8 +70,15 @@ function setLocation(data) {
 }
 
 function locationSuccess(position) {
-  var lat = position.coords.latitude;
-  var lon = position.coords.longitude;
+  var pos = {};
+  pos.lat = position.coords.latitude;
+  pos.lon = position.coords.longitude;
+  locationSucc(pos);
+}
+
+function locationSucc(pos) {
+  var lat = pos.lat;
+  var lon = pos.lon;
 
   $.ajax({
     url: 'http://query.yahooapis.com/v1/public/yql?q=select%20postal%20from%20geo.placefinder%20where%20text%3D%22' + lat + ',' + lon + '%22%20and%20gflags%3D%22R%22&format=json&diagnostics=true&callback=',
