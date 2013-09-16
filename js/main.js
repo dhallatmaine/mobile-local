@@ -5,11 +5,13 @@ $(document).ready(function () {
   $('#header').hide();
   $('#news').hide();
   $('#footer').hide();
+  setPreviousSearches();
 })
 
 function updatePage() {
   getWeather();
   getNews();
+  addToPreviousSearches(zipcode);
   setPreviousSearches();
 }
 
@@ -118,13 +120,12 @@ function getLocation(lat, lon) {
 }
 
 function locationCB(data) {
-  zipcode = extractFromAdress(data['results']['0']['address_components'], "postal_code");
-  addToPreviousSearches(zipcode);
+  zipcode = extractFromAddress(data['results']['0']['address_components'], "postal_code");
   updatePage();
 }
 
 //because google geocoding kind of sucks, you have to loop through and "figure" out where the hell the zip code is
-function extractFromAdress(components, type){
+function extractFromAddress(components, type){
   for (var i = 0; i < components.length; i++)
     for (var j=0; j < components[i].types.length; j++)
       if (components[i].types[j] == type) return components[i].long_name;
@@ -153,25 +154,26 @@ function showError(msg){
 }
 
 function addToPreviousSearches(zip) {
-  var local = JSON.parse(localStorage.getItem('zips'));
+  var zips = localStorage.getItem('zips');
+  var local = new Array();
+  if (zips != null) {
+    local = JSON.parse(localStorage.getItem('zips'));
+  }
   local.push(zip);
   localStorage.setItem('zips', JSON.stringify(local));
 }
 
 function setPreviousSearches() {
   var local = localStorage.getItem('zips');
-  var zips = JSON.parse(local);
-  var until = 5;
-
-  if (zips.length < 5) {
-    until = 0;
+  var zips = JSON.parse(local).reverse();
+  if (zips != null) {
+    var loop = zips.length > 5 ? 5 : zips.length;
+    var out = '';
+    for (var i = 0; i < loop; i++) {
+      out += '<li><a href="" onclick="setSearch(this.innerHTML)">' + zips[i] + '</a></li>'
+    }
+    $('#previous').html(out);
   }
-
-  var out = '';
-  for (var i = zips.length; i > until; i--) {
-    out += '<li><a href="" onclick="setSearch(this.innerHTML)">' + zips[i] + '</a></li>'
-  }
-  $('#previous').html(out);
 }
 
 function setSearch(zip) {
