@@ -1,7 +1,10 @@
-var zipcode = '10007';
+var zipcode = '';
 
 $(document).ready(function () {
   useDefaultLocation();
+  $('#header').hide();
+  $('#news').hide();
+  $('#footer').hide();
 })
 
 function updatePage() {
@@ -36,17 +39,39 @@ function setNews(data) {
   $('#news_item3').html('<a href="' + item[2]['link'] + '">' + item[2]['title'] + '</a>');
   $('#news_item4').html('<a href="' + item[3]['link'] + '">' + item[3]['title'] + '</a>');
   $('#news_item5').html('<a href="' + item[4]['link'] + '">' + item[4]['title'] + '</a>');
+  $('#news').show();
 }
 
 function setWeather(data) {
-  var item = data['query']['results']['channel']['item'];
+  var channel = data['query']['results']['channel'];
+  var location = channel['location'];
+  var item = channel['item'];
   var condition = item['condition'];
-  var text = '<p>' + item['title'] + '<br />';
-  text += condition['date'] + '<br />';
-  text += condition['text'];
-  text += '<img src="http://l.yimg.com/a/i/us/we/52/' + condition['code'] + '.gif" />';
-  text += condition['temp'] + ' F&deg;</p>';
-  $('#weather').html(text);
+  var forecast = item['forecast'];
+
+  var currentWeather = '<img src="http://l.yimg.com/a/i/us/we/52/' + condition['code'] + '.gif" /><br />' + condition['text'];
+  $('#currentWeather').html(currentWeather);
+
+  var currentLocation = location['city'] + '<br /><span class="temperature">' + condition['temp'] + '&deg; F</span>';
+  $('#currentLocation').html(currentLocation);
+
+  var today = forecast[0]['day'] + '<br />';
+  today += '<img src="http://l.yimg.com/a/i/us/we/52/' + forecast[0]['code'] + '.gif" width="25px" height="25px" /><br />';
+  today += forecast[0]['low'] + '&deg;F / ' + forecast[0]['high'] + '&deg;F';
+  $('#today').html(today);
+
+  var tomorrow = forecast[1]['day'] + '<br />';
+  tomorrow += '<img src="http://l.yimg.com/a/i/us/we/52/' + forecast[1]['code'] + '.gif" width="25px" height="25px" /><br />';
+  tomorrow += forecast[1]['low'] + '&deg;F / ' + forecast[1]['high'] + '&deg;F';
+  $('#tomorrow').html(tomorrow);
+
+  var extended = forecast[2]['day'] + '<br />';
+  extended += '<img src="http://l.yimg.com/a/i/us/we/52/' + forecast[2]['code'] + '.gif" width="25px" height="25px" /><br />';
+  extended += forecast[2]['low'] + '&deg;F / ' + forecast[2]['high'] + '&deg;F';
+  $('#extended').html(extended);
+
+  $('#header').show();
+  $('#footer').show();
 }
 
 function updateLocation() {
@@ -83,7 +108,7 @@ function getLocationSuccess(position) {
 
 function getLocation(lat, lon) {
   $.ajax({
-    url: 'http://query.yahooapis.com/v1/public/yql?q=select%20postal%20from%20geo.placefinder%20where%20text%3D%22' + lat + ',' + lon + '%22%20and%20gflags%3D%22R%22&format=json&diagnostics=true&callback=',
+    url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&sensor=true',
     dataType: 'json',
     success: function (data) {
       locationCB(data);
@@ -92,8 +117,16 @@ function getLocation(lat, lon) {
 }
 
 function locationCB(data) {
-  zipcode = data['query']['results']['Result']['postal'];
+  zipcode = extractFromAdress(data['results']['0']['address_components'], "postal_code");
   updatePage();
+}
+
+//because google geocoding kind of sucks, you have to loop through and "figure" out where the hell the zip code is
+function extractFromAdress(components, type){
+  for (var i=0; i<components.length; i++)
+    for (var j=0; j<components[i].types.length; j++)
+      if (components[i].types[j]==type) return components[i].long_name;
+  return "";
 }
 
 function getLocationError(error){

@@ -97,21 +97,49 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#main {
+  font-family: Arial;
+  width: 320px;
+}
+#main a {
+  color: #363636;
+  text-decoration: none;
+}
+#news {
+  margin-top: 15px;
+}
+#footer {
+  border-top: solid 2px #4A4B52;
+}
+#currentWeather {
+  float: left;
+  margin-left: 20px;
+}
+#currentLocation {
+  float: right;
+  margin-top: 15px;
+}
+#today {
+  float: left;
+}
+#tomorrow {
+  float: left;
+}
+#extended {
+  float: right;
+}
+.temperature {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.forecast {
+  text-align: center;
+  font-size: .9em;
+  width: 105px;
+}
+.rightbar {
+  border-right: solid 2px #4A4B52;
+}
 
 /* ==========================================================================
    Helper classes
