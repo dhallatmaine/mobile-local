@@ -123,10 +123,10 @@ function locationCB(data) {
 
 //because google geocoding kind of sucks, you have to loop through and "figure" out where the hell the zip code is
 function extractFromAdress(components, type){
-  for (var i=0; i<components.length; i++)
-    for (var j=0; j<components[i].types.length; j++)
-      if (components[i].types[j]==type) return components[i].long_name;
-  return "";
+  for (var i = 0; i < components.length; i++)
+    for (var j=0; j < components[i].types.length; j++)
+      if (components[i].types[j] == type) return components[i].long_name;
+  return '';
 }
 
 function getLocationError(error){
