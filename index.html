@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>
-<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>
-<html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,51 +17,28 @@
 <body>
   <div id="main">
     <div id="header">
-      <div id="currentWeather">
-        <img src="http://l.yimg.com/a/i/us/we/52/40.gif" />
-        <br />
-        Rain
-      </div>
-      <div id="currentLocation">
-        South Portland
-        <br />
-        <span class="temperature">61&deg; F</span>
-      </div>
+      <div id="currentWeather"></div>
+      <div id="currentLocation"></div>
     </div>
     <div style="clear: both;"></div>
     <div id="news">
       <ul data-role="listview">
-        <li id="news_item1" data-icon="arrow-r">News Article 1</li>
-        <li id="news_item2" data-icon="arrow-r">News Article 2</li>
-        <li id="news_item3" data-icon="arrow-r">News Article 3</li>
-        <li id="news_item4" data-icon="arrow-r">News Article 4</li>
-        <li id="news_item5" data-icon="arrow-r">News Article 5</li>
+        <li id="news_item1"></li>
+        <li id="news_item2"></li>
+        <li id="news_item3"></li>
+        <li id="news_item4"></li>
+        <li id="news_item5"></li>
       </ul>
     </div>
     <div id="footer">
-      <div id="today" class="forecast rightbar">
-        Today<br />
-        <img src="http://l.yimg.com/a/i/us/we/52/40.gif" width="25px" height="25px" />
-        <br />
-        61&deg; F / 70&deg; F
-      </div>
-      <div id="tomorrow" class="forecast rightbar">
-        Tomorrow<br />
-        <img src="http://l.yimg.com/a/i/us/we/52/32.gif" width="25px" height="25px" />
-        <br />
-        51&deg; F / 60&deg; F
-      </div>
-      <div id="extended" class="forecast">
-        Wednesday<br />
-        <img src="http://l.yimg.com/a/i/us/we/52/40.gif" width="25px" height="25px" />
-        <br />
-        61&deg; F / 70&deg; F
-      </div>
+      <div id="today" class="forecast rightbar"></div>
+      <div id="tomorrow" class="forecast rightbar"></div>
+      <div id="extended" class="forecast"></div>
     </div>
     <div style="clear: both;"></div>
     <div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b">
       <form method="get">
-        <label for="location"><strong>Zip or City and State </strong>
+        <label for="location"><strong>Zip, City, and/or State </strong>
           <input type="text" id="location" name="location">
         </label>
         <input type="button" id="go" value="Go" data-role="button" onclick="updateLocation();">
@@ -77,6 +46,5 @@
       </form>
     </div>
   </div>
-
 </body>
 </html>
