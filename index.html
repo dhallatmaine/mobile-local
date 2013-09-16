@@ -13,16 +13,14 @@
   <title>Mobile-Local</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.css">
   <script src="js/vendor/modernizr-2.6.2.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.js"><\/script>')</script>
+  <script src="js/vendor/jquery-1.10.2.js"></script>
   <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
+  <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.js"></script>
 </head>
 <body>
 <div id="weather"></div>
@@ -30,9 +28,17 @@
   <label for="location"><strong>Zip or City and State </strong>
     <input type="text" id="location" name="location">
   </label>
-  <input type="button" id="go" value="Go" onclick="updateLocation();">
-  <input type="button" id="default" value="Use Current Location" onclick="useDefaultLocation();">
+  <input type="button" id="go" value="Go" data-role="button" onclick="updateLocation();">
+  <input type="button" id="default" value="Use Current Location" data-role="button" onclick="useDefaultLocation();">
 </form>
-<div id="news"></div>
+<div id="news">
+  <ul data-role="listview">
+    <li id="news_item1"></li>
+    <li id="news_item2"></li>
+    <li id="news_item3"></li>
+    <li id="news_item4"></li>
+    <li id="news_item5"></li>
+  </ul>
+</div>
 </body>
 </html>

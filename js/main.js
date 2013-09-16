@@ -30,13 +30,12 @@ function getNews() {
 }
 
 function setNews(data) {
-  var news = '<ul>';
-  var items = data['query']['results']['item'];
-  for (var i = 0; i < items.length; i++) {
-    news += '<li>' + items[i]['title'] + '</li>';
-  }
-  news += '</ul>';
-  $('#news').html(news);
+  var item = data['query']['results']['item'];
+  $('#news_item1').html('<a href="' + item[0]['link'] + '">' + item[0]['title'] + '</a>');
+  $('#news_item2').html('<a href="' + item[1]['link'] + '">' + item[1]['title'] + '</a>');
+  $('#news_item3').html('<a href="' + item[2]['link'] + '">' + item[2]['title'] + '</a>');
+  $('#news_item4').html('<a href="' + item[3]['link'] + '">' + item[3]['title'] + '</a>');
+  $('#news_item5').html('<a href="' + item[4]['link'] + '">' + item[4]['title'] + '</a>');
 }
 
 function setWeather(data) {
