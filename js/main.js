@@ -1,13 +1,12 @@
-var zipcode = '94089';
-var currentLocation = null;
+var zipcode = '10007';
 
 $(document).ready(function () {
-  getWeather();
+  updatePage();
+  useDefaultLocation();
 })
 
 function updatePage() {
   getWeather();
-  //getNews();
 }
 
 function getWeather() {
@@ -35,62 +34,50 @@ function updateLocation() {
   getZipAndCordsFromInput(document.getElementById("location").value);
 }
 
-var cords = null;
-
 function getZipAndCordsFromInput(userInput) {
   $.ajax({
     url: 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.placefinder%20where%20text%3D%22' + userInput + '%22&format=json&diagnostics=true&callback=',
     dataType: 'json',
     success: function (data) {
-      cords = data;
       setZipAndCords(data);
     }
   });
 }
 
 function setZipAndCords(data) {
-  var pos = {};
-  pos.lat = data['query']['results']['Result']['latitude'];
-  pos.lon = data['query']['results']['Result']['longitude'];
-  locationSucc(pos);
+  getLocation(data['query']['results']['Result']['latitude'], data['query']['results']['Result']['longitude']);
 }
 
 function useDefaultLocation() {
   // Does this browser support geolocation?
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(locationSuccess, locationError);
+    navigator.geolocation.getCurrentPosition(getLocationSuccess, getLocationError);
   } else {
     showError("Your browser does not support Geolocation!");
   }
 }
 
-function setLocation(data) {
-  zipcode = data['query']['results']['Result']['postal'];
-  updatePage();
+function getLocationSuccess(position) {
+  document.getElementById("location").value = "";
+  getLocation(position.coords.latitude, position.coords.longitude);
 }
 
-function locationSuccess(position) {
-  var pos = {};
-  pos.lat = position.coords.latitude;
-  pos.lon = position.coords.longitude;
-  locationSucc(pos);
-}
-
-function locationSucc(pos) {
-  var lat = pos.lat;
-  var lon = pos.lon;
-
+function getLocation(lat, lon) {
   $.ajax({
     url: 'http://query.yahooapis.com/v1/public/yql?q=select%20postal%20from%20geo.placefinder%20where%20text%3D%22' + lat + ',' + lon + '%22%20and%20gflags%3D%22R%22&format=json&diagnostics=true&callback=',
     dataType: 'json',
     success: function (data) {
-      setLocation(data);
+      locationCB(data);
     }
   });
 }
 
+function locationCB(data) {
+  zipcode = data['query']['results']['Result']['postal'];
+  updatePage();
+}
 
-function locationError(error){
+function getLocationError(error){
   switch(error.code) {
     case error.TIMEOUT:
       showError("A timeout occured! Please try again!");
@@ -105,7 +92,6 @@ function locationError(error){
       showError('An unknown error occured!');
       break;
   }
-
 }
 
 function showError(msg){
