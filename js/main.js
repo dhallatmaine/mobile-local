@@ -10,6 +10,7 @@ $(document).ready(function () {
 function updatePage() {
   getWeather();
   getNews();
+  setPreviousSearches();
 }
 
 function getWeather() {
@@ -118,6 +119,7 @@ function getLocation(lat, lon) {
 
 function locationCB(data) {
   zipcode = extractFromAdress(data['results']['0']['address_components'], "postal_code");
+  addToPreviousSearches(zipcode);
   updatePage();
 }
 
@@ -148,4 +150,31 @@ function getLocationError(error){
 
 function showError(msg){
   $('#weather').html(msg);
+}
+
+function addToPreviousSearches(zip) {
+  var local = JSON.parse(localStorage.getItem('zips'));
+  local.push(zip);
+  localStorage.setItem('zips', JSON.stringify(local));
+}
+
+function setPreviousSearches() {
+  var local = localStorage.getItem('zips');
+  var zips = JSON.parse(local);
+  var until = 5;
+
+  if (zips.length < 5) {
+    until = 0;
+  }
+
+  var out = '';
+  for (var i = zips.length; i > until; i--) {
+    out += '<li><a href="" onclick="setSearch(this.innerHTML)">' + zips[i] + '</a></li>'
+  }
+  $('#previous').html(out);
+}
+
+function setSearch(zip) {
+  document.getElementById("location").value = zip;
+  updateLocation();
 }
