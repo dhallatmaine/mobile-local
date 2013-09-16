@@ -1,12 +1,12 @@
 var zipcode = '10007';
 
 $(document).ready(function () {
-  updatePage();
   useDefaultLocation();
 })
 
 function updatePage() {
   getWeather();
+  getNews();
 }
 
 function getWeather() {
@@ -17,6 +17,26 @@ function getWeather() {
       setWeather(data);
     }
   });
+}
+
+function getNews() {
+  $.ajax({
+    url: 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20rss%20where%20url%20%3D%20%22http%3A%2F%2Fnews.google.com%2Fnews%3Fgeo%3D' + zipcode + '%26output%3Drss%22%20limit%205&format=json&diagnostics=true&callback=',
+    dataType: 'json',
+    success: function (data) {
+      setNews(data);
+    }
+  });
+}
+
+function setNews(data) {
+  var news = '<ul>';
+  var items = data['query']['results']['item'];
+  for (var i = 0; i < items.length; i++) {
+    news += '<li>' + items[i]['title'] + '</li>';
+  }
+  news += '</ul>';
+  $('#news').html(news);
 }
 
 function setWeather(data) {
