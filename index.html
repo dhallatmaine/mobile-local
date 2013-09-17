@@ -15,9 +15,9 @@
   <script src="js/main.js"></script>
 </head>
 <body>
-  <div id="main">
+  <div id="main" data-role="page" data-theme="a">
 
-    <div class="ui-bar ui-bar-b" style="margin-bottom: -15px;" data-theme="b" data-icon="gear" class="ui-btn-right" onclick="showLocation();">
+    <div style="margin-bottom: -15px;" class="ui-bar ui-bar-a" onclick="showLocation();">
       Change Location
     </div>
 
@@ -50,7 +50,7 @@
 
     <div style="clear: both;"></div>
 
-    <div id="locationForm" data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b">
+    <div id="locationForm" data-role="collapsible" data-collapsed="false" data-theme="a" data-content-theme="a">
       <form method="get">
         <label for="location"><strong>Zip, City, and/or State </strong>
           <input type="text" id="location" name="location">

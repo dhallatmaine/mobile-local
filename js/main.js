@@ -51,11 +51,16 @@ function getNews() {
 
 function setNews(data) {
   var item = data['query']['results']['item'];
-  $('#news_item1').html('<a href="' + item[0]['link'] + '">' + item[0]['title'] + '</a>');
-  $('#news_item2').html('<a href="' + item[1]['link'] + '">' + item[1]['title'] + '</a>');
-  $('#news_item3').html('<a href="' + item[2]['link'] + '">' + item[2]['title'] + '</a>');
-  $('#news_item4').html('<a href="' + item[3]['link'] + '">' + item[3]['title'] + '</a>');
-  $('#news_item5').html('<a href="' + item[4]['link'] + '">' + item[4]['title'] + '</a>');
+  var day = new Date(item[0]['pubDate']);
+  $('#news_item1').html('<span class="date">' + day.getMonth() + '/' + day.getDate() + '</span><a href="' + item[0]['link'] + '" class="newsLink">' + item[0]['title'] + '</a>');
+  day = new Date(item[1]['pubDate']);
+  $('#news_item2').html('<span class="date">' + day.getMonth() + '/' + day.getDate() + '</span><a href="' + item[1]['link'] + '" class="newsLink">' + item[1]['title'] + '</a>');
+  day = new Date(item[2]['pubDate']);
+  $('#news_item3').html('<span class="date">' + day.getMonth() + '/' + day.getDate() + '</span><a href="' + item[2]['link'] + '" class="newsLink">' + item[2]['title'] + '</a>');
+  day = new Date(item[3]['pubDate']);
+  $('#news_item4').html('<span class="date">' + day.getMonth() + '/' + day.getDate() + '</span><a href="' + item[3]['link'] + '" class="newsLink">' + item[3]['title'] + '</a>');
+  day = new Date(item[4]['pubDate']);
+  $('#news_item5').html('<span class="date">' + day.getMonth() + '/' + day.getDate() + '</span><a href="' + item[4]['link'] + '" class="newsLink">' + item[4]['title'] + '</a>');
   $('#news').show();
 }
 

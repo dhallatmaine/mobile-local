@@ -103,7 +103,7 @@ textarea {
 }
 
 #main a {
-  color: #363636;
+  color: #FFF;
   text-decoration: none;
 }
 #header {
@@ -112,16 +112,28 @@ textarea {
 #news {
   margin-top: 15px;
 }
+.date {
+  margin: 6px 6px 6px 6px;
+  padding-right: 6px;
+  border-right: 1px solid #4A4B52;
+  font-size: .8em;
+  font-weight: normal;
+}
+.newsLink {
+  font-size: .9em;
+}
 #footer {
   border-top: solid 2px #4A4B52;
 }
 #currentWeather {
+  text-align: center;
   float: left;
   margin-left: 20px;
 }
 #currentLocation {
   float: right;
   margin-top: 15px;
+  margin-right: 20px;
 }
 #today {
   float: left;
