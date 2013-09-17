@@ -16,37 +16,53 @@
 </head>
 <body>
   <div id="main">
-    <div id="header">
-      <div id="currentWeather"></div>
-      <div id="currentLocation"></div>
+
+    <div class="ui-bar ui-bar-b" style="margin-bottom: -15px;" data-theme="b" data-icon="gear" class="ui-btn-right" onclick="showLocation();">
+      Change Location
     </div>
+
+    <div id="app">
+
+      <div id="header">
+        <div id="currentWeather"></div>
+        <div id="currentLocation"></div>
+      </div>
+
+      <div style="clear: both;"></div>
+
+      <div id="news">
+        <ul data-role="listview">
+          <li id="news_item1"></li>
+          <li id="news_item2"></li>
+          <li id="news_item3"></li>
+          <li id="news_item4"></li>
+          <li id="news_item5"></li>
+        </ul>
+      </div>
+
+      <div id="footer">
+        <div id="today" class="forecast rightbar"></div>
+        <div id="tomorrow" class="forecast rightbar"></div>
+        <div id="extended" class="forecast"></div>
+      </div>
+
+    </div>
+
     <div style="clear: both;"></div>
-    <div id="news">
-      <ul data-role="listview">
-        <li id="news_item1"></li>
-        <li id="news_item2"></li>
-        <li id="news_item3"></li>
-        <li id="news_item4"></li>
-        <li id="news_item5"></li>
-      </ul>
-    </div>
-    <div id="footer">
-      <div id="today" class="forecast rightbar"></div>
-      <div id="tomorrow" class="forecast rightbar"></div>
-      <div id="extended" class="forecast"></div>
-    </div>
-    <div style="clear: both;"></div>
-    <div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b">
+
+    <div id="locationForm" data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b">
       <form method="get">
         <label for="location"><strong>Zip, City, and/or State </strong>
           <input type="text" id="location" name="location">
         </label>
         <input type="button" id="go" value="Go" data-role="button" onclick="updateLocation();">
         <input type="button" id="default" value="Use Current Location" data-role="button" onclick="useDefaultLocation();">
+        <input type="button" id="cancel" value="Cancel" data-role="button" onclick="hideLocationSearch();">
       </form>
       Previous searches:
       <ul id="previous"></ul>
     </div>
+
   </div>
 </body>
 </html>

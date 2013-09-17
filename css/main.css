@@ -101,9 +101,13 @@ textarea {
   font-family: Arial;
   width: 320px;
 }
+
 #main a {
   color: #363636;
   text-decoration: none;
+}
+#header {
+  margin-top: 20px;
 }
 #news {
   margin-top: 15px;

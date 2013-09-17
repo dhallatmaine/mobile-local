@@ -1,7 +1,6 @@
 var zipcode = '';
 
 $(document).ready(function () {
-  useDefaultLocation();
   $('#header').hide();
   $('#news').hide();
   $('#footer').hide();
@@ -13,6 +12,21 @@ function updatePage() {
   getNews();
   addToPreviousSearches(zipcode);
   setPreviousSearches();
+  hideLocationSearch();
+}
+
+function showLocation() {
+  $('#app').hide();
+  showLocationSearch();
+}
+
+function hideLocationSearch() {
+  $('#locationForm').hide();
+  $('#app').show();
+}
+
+function showLocationSearch() {
+  $('#locationForm').show();
 }
 
 function getWeather() {
