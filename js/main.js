@@ -199,3 +199,10 @@ function setSearch(zip) {
   document.getElementById("location").value = zip;
   updateLocation();
 }
+
+function clearLocations() {
+  zipcode = '';
+  document.getElementById("location").value = "";
+  localStorage.clear();
+  location.reload();
+}
