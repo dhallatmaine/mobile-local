@@ -1,4 +1,5 @@
 var zipcode = '';
+var months = ["Jan", "Feb", "Mar", "Apr", "Jun", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
 $(document).ready(function () {
   $('#header').hide();
@@ -52,15 +53,15 @@ function getNews() {
 function setNews(data) {
   var item = data['query']['results']['item'];
   var day = new Date(item[0]['pubDate']);
-  $('#news_item1').html('<span class="date">' + day.getMonth() + '/' + day.getDate() + '</span><a href="' + item[0]['link'] + '" class="newsLink">' + item[0]['title'] + '</a>');
+  $('#news_item1').html('<span class="date">' + months[day.getMonth()] + ' ' + day.getDate() + '</span><a href="' + item[0]['link'] + '" class="newsLink">' + item[0]['title'] + '</a>');
   day = new Date(item[1]['pubDate']);
-  $('#news_item2').html('<span class="date">' + day.getMonth() + '/' + day.getDate() + '</span><a href="' + item[1]['link'] + '" class="newsLink">' + item[1]['title'] + '</a>');
+  $('#news_item2').html('<span class="date">' + months[day.getMonth()] + ' ' + day.getDate() + '</span><a href="' + item[1]['link'] + '" class="newsLink">' + item[1]['title'] + '</a>');
   day = new Date(item[2]['pubDate']);
-  $('#news_item3').html('<span class="date">' + day.getMonth() + '/' + day.getDate() + '</span><a href="' + item[2]['link'] + '" class="newsLink">' + item[2]['title'] + '</a>');
+  $('#news_item3').html('<span class="date">' + months[day.getMonth()] + ' ' + day.getDate() + '</span><a href="' + item[2]['link'] + '" class="newsLink">' + item[2]['title'] + '</a>');
   day = new Date(item[3]['pubDate']);
-  $('#news_item4').html('<span class="date">' + day.getMonth() + '/' + day.getDate() + '</span><a href="' + item[3]['link'] + '" class="newsLink">' + item[3]['title'] + '</a>');
+  $('#news_item4').html('<span class="date">' + months[day.getMonth()] + ' ' + day.getDate() + '</span><a href="' + item[3]['link'] + '" class="newsLink">' + item[3]['title'] + '</a>');
   day = new Date(item[4]['pubDate']);
-  $('#news_item5').html('<span class="date">' + day.getMonth() + '/' + day.getDate() + '</span><a href="' + item[4]['link'] + '" class="newsLink">' + item[4]['title'] + '</a>');
+  $('#news_item5').html('<span class="date">' + months[day.getMonth()] + ' ' + day.getDate() + '</span><a href="' + item[4]['link'] + '" class="newsLink">' + item[4]['title'] + '</a>');
   $('#news').show();
 }
 
@@ -74,7 +75,7 @@ function setWeather(data) {
   var currentWeather = '<img src="http://l.yimg.com/a/i/us/we/52/' + condition['code'] + '.gif" /><br />' + condition['text'];
   $('#currentWeather').html(currentWeather);
 
-  var currentLocation = location['city'] + '<br /><span class="temperature">' + condition['temp'] + '&deg; F</span>';
+  var currentLocation = location['city'] + ', ' + location['region'] + '<br /><span class="temperature">' + condition['temp'] + '&deg; F</span>';
   $('#currentLocation').html(currentLocation);
 
   var today = forecast[0]['day'] + '<br />';
@@ -92,8 +93,34 @@ function setWeather(data) {
   extended += forecast[2]['low'] + '&deg;F / ' + forecast[2]['high'] + '&deg;F';
   $('#extended').html(extended);
 
+  changeWeatherBg(condition['text']);
+
   $('#header').show();
   $('#footer').show();
+}
+
+function changeWeatherBg(currentConditions) {
+  removeClasses();
+  if (currentConditions == "Mostly Cloudy") {
+    $('#header').addClass('mostlyCloudyBG');
+  } else if (currentConditions == "Partly Cloudy") {
+    $('#header').addClass('partlyCloudyBG');
+  } else if (currentConditions == "Cloudy") {
+    $('#header').addClass('cloudyBG');
+  } else if (currentConditions == "Rain") {
+    $('#header').addClass('rainBG');
+  } else if (currentConditions == "Heavy Rain") {
+    $('#header').addClass('heavyRainBG');
+  } else {
+    $('#header').addClass('skyBG');
+  }
+}
+
+function removeClasses() {
+  $('#header').removeClass('skyBG');
+  $('#header').removeClass('mostlyCloudyBG');
+  $('#header').removeClass('cloudyBG');
+  $('#header').removeClass('rainBG');
 }
 
 function updateLocation() {

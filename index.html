@@ -22,7 +22,7 @@
 
     <div id="app">
 
-      <div id="header">
+      <div id="header" class="ui-mobile type-home ui-content">
         <div id="currentWeather"></div>
         <div id="currentLocation"></div>
       </div>
@@ -50,18 +50,18 @@
     <div style="clear: both;"></div>
 
     <div id="locationForm" data-role="collapsible" data-collapsed="false" data-theme="a" data-content-theme="a">
-      <div id="sky"></div>
+      <div id="sky" class="skyBG">
+        <h1>Mobile-Local</h1>
+      </div>
       <form method="get">
-        <label for="location"><strong>Zip, City, and/or State </strong>
-          <input type="text" id="location" name="location">
-        </label>
+        <input type="text" id="location" name="location" placeholder="Enter zip or city, state...">
         <input type="button" id="go" value="Go" data-role="button" onclick="updateLocation();">
         <input type="button" id="default" value="Use Current Location" data-role="button" onclick="useDefaultLocation();">
         <input type="button" id="cancel" value="Cancel" data-role="button" onclick="hideLocationSearch();">
       </form>
       Previous searches:
       <ul id="previous"></ul>
-      <a href="" onClick="clearLocations();">Clear local history</a>
+      <input type="button" id="clearLocations" onClick="clearLocations();" value="Clear local history">
     </div>
 
   </div>
