@@ -144,6 +144,13 @@ textarea {
 #extended {
   float: right;
 }
+#sky {
+  margin-left: -15px;
+  height: 140px;
+  width: 320px;
+  background: url('../images/sky.png') transparent;
+  opacity:0.6;
+}
 .temperature {
   font-size: 1.5em;
   font-weight: bold;
@@ -155,6 +162,9 @@ textarea {
 }
 .rightbar {
   border-right: solid 2px #4A4B52;
+}
+.newsArticle {
+  height: 65px;
 }
 
 /* ==========================================================================
